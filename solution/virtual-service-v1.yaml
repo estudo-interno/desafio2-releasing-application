@@ -1,0 +1,30 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: api-release
+spec:
+  gateways:
+  - api-release-gateway
+  hosts:
+  - '*'
+
+  http:
+      - match:
+          - uri:
+              prefix: /api-release
+        route:
+          - destination:
+              host: api-release
+              port:
+                number: 8080
+              subset: v1
+            weight: 10
+          - destination:
+              host: api-release
+              port:
+                number: 8080
+              subset: v2
+            weight: 90
+
+        
+      
